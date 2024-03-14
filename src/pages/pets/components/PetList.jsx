@@ -1,14 +1,14 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import { Button } from 'primereact/button';
 import { Column } from 'primereact/column';
 import { DataTable } from 'primereact/datatable';
-import { InputText } from 'primereact/inputtext';
 import { Toast } from 'primereact/toast';
 import Error from '../../../components/Error';
 import PetToolbar from './PetToolbar';
 import { petServiceInstance } from '../../../services/pets/PetService';
+import ActionBodyTemplate from './ActionBodyTemplate';
+import Header from './Header';
 
 const PetList = () => {
     // Refs
@@ -113,35 +113,6 @@ const PetList = () => {
     };
     
 
-    
-    // Templates
-    const header = (
-        <div className="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-            <h5 className="m-0">&nbsp;</h5>
-            <span className="block mt-2 md:mt-0 p-input-icon-left">
-                <i className="pi pi-search" />
-                <InputText type="search" onInput={(e) => onFilter(e)} placeholder="Buscar..." />
-            </span>
-        </div>
-    );
-
-    const actionBodyTemplate = (rowData) => {
-        return (
-            <div className="actions">
-                     <Button
-                        tooltip={"Ver"}
-                        tooltipOptions={{ position: "top" }}
-                        icon="pi pi-eye"
-                        className="p-button-raised p-button-info p-mr-2"
-                        onClick={() => onViewPet(rowData.id)}
-                    />
-                <Button tooltip={"Editar"} tooltipOptions={{ position: 'top' }} icon="pi pi-pencil" className="p-button-raised p-button-success p-mr-2" onClick={() => onEditPet(rowData.id)} />
-                <Button tooltip={"Eliminar"} tooltipOptions={{ position: 'top' }} icon="pi pi-trash" className="p-button-raised p-button-danger p-mr-2" onClick={() => onDeletePet(rowData.id)} />
-            </div>
-        );
-    }
-
-    // Render
     if (showError) {
         return (
             <Error mensaje={'There was a problem loading the list of pets'}></Error>
@@ -154,12 +125,12 @@ const PetList = () => {
             <div className="grid">
                 <div className="col-12">
                     <div className="card">
-                        <h5>Contactos</h5>
+                        <h5>Pets</h5>
                         <Toast ref={toast} />
                         <DataTable ref={dt} value={pets} lazy
                             paginator first={lazyParams.first} rows={10} totalRecords={totalRecords} onPage={onPage}
                             loading={loadingDatatable}
-                            className="p-datatable-gridlines" header={header}
+                            className="p-datatable-gridlines" header={<Header onFilter={onFilter}/>}
                         >
                             <Column field="name" header="Name" headerStyle={{ width: '14%', minWidth: '10rem' }}></Column>
                             <Column field="breed" header="Breed" ></Column>
@@ -169,7 +140,7 @@ const PetList = () => {
                             <Column field="gender" header="Gender" ></Column>
                             <Column field="color" header="Color" ></Column>
                             
-                            <Column body={actionBodyTemplate}></Column>
+                            <Column body={(rowData) => <ActionBodyTemplate rowData={rowData} onViewPet={onViewPet} onEditPet={onEditPet} onDeletePet={onDeletePet} />}></Column>
                         </DataTable>
                     </div>
                 </div>

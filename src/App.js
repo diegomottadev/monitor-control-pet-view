@@ -29,39 +29,17 @@ import RoleForm from './pages/security/roles/form/RoleForm';
 import UserForm from './pages/security/users/form/UserForm';
 import UserPage from './pages/security/users/UserPage';
 import PermissionList from './pages/security/permissions/components/PermissionList';
-import ContactPage from './pages/contacts/ContactPage';
-import ContactForm from './pages/contacts/form/ContactForm';
-import ApplicationPage from './pages/applications/ApplicationPage';
-import ApplicationForm from './pages/applications/form/ApplicationForm';
-import ApplicationDetail from './pages/applications/components/ApplicationDetail';
 import PetPage from './pages/pets/PetPage';
-import PetForm from './pages/pets/form/PetForm';
-import PetDetail from './pages/pets/components/PetDetail';
-
-
-
+import PetForm from './pages/pets/PetForm';
+import PetDetail from './pages/pets/PetDetail';
 
 initAxiosInterceptors() // lo usa en el useEffect para preguntar si ese token lo tiene el usuario
 
-
 const App = () => {
-
-    /*
-      Aca empieza mis estados  
-    */
-    const { token, setToken,isExpired,deleteToken } = useToken();
-
+    const { token, setToken,isTokenExpired,deleteToken } = useToken();
     const [usuario, setUsuario] = useState(null); // no sabemos si hay un usuario autenticado
     const [cargandoUsuario, setCargandoUsuario] = useState(true);
     const [error, setError] = useState(null);
-
-    /*
-      Termina mis estados  
-    */
-
-    /*
-      Estados para el funcionamiento del template
-    */
 
     const [menuActive, setMenuActive] = useState(false);
     const [topbarMenuActive, setTopbarMenuActive] = useState(false);
@@ -85,13 +63,6 @@ const App = () => {
     let configClick = false;
     let inlineMenuClick = false;
 
-    // const breadcrumb = [
-    //     { path: '/home', parent: 'General', label: 'Estadísticas' },
-    //     { path: '/movements', parent: 'Secciones', label: 'Movimientos' },
-    //     { path: '/categories', parent: 'Secciones', label: 'Categorias' },
-    //     { path: '/paymentMethods', parent: 'Secciones', label: 'Formas de pagos' },
-
-    // ];
 
     const menu = [
         {
@@ -127,23 +98,14 @@ const App = () => {
 
     ];
 
-    /*
-        Implementacion para autenticacion de usuario:
-        Verifica si existe el token  para validar su ingreso al sistema como asi realizar
-        acciones sobre el mismo
-    */
-
-
-
     useEffect(() => {
         async function cargandoUsuario() {
-            if (isExpired) {
+            if (isTokenExpired) {
                 setCargandoUsuario(false);
                 return;
             }
             try {
                 const { data } = await me();
-                // console.log('user',data);
                 setUsuario(data);
                 setCargandoUsuario(false)
             } catch (error) {
@@ -153,24 +115,17 @@ const App = () => {
         }
 
         cargandoUsuario();
-    }, [token])
+    }, [token,isTokenExpired])
 
 
     function mostrarError(mensaje) {
-        //alert();
         setError(mensaje);
     }
-
-
 
     useEffect(() => {
         copyTooltipRef && copyTooltipRef.current && copyTooltipRef.current.updateTargetEvents();
     }, [location]);
 
-
-    // let meta = breadcrumb.find((obj) => {
-    //     return obj.path === location.pathname;
-    // });
 
     const onInputStyleChange = (inputStyle) => {
         setInputStyle(inputStyle);
@@ -200,10 +155,6 @@ const App = () => {
     };
 
     const onDocumentClick = () => {
-        // if (!topbarItemClick) {
-        //     setActiveTopbarItem(null);
-        //     setTopbarMenuActive(false);
-        // }
 
         if (!menuClick) {
             if (isHorizontal() || isSlim()) {
@@ -283,18 +234,9 @@ const App = () => {
         }
     };
 
-    // const onTopbarMenuButtonClick = (event) => {
-    //     //topbarItemClick = true;
-    //     //setTopbarMenuActive((prevTopbarMenuActive) => !prevTopbarMenuActive);
-
-    //     hideOverlayMenu();
-
-    //     event.preventDefault();
-    // };
     const onTopbarItemClick = (event, item) => {
- 
         deleteToken()
-        navigate(`/`);
+        navigate('/');
         event.preventDefault();
     };
 
@@ -393,11 +335,6 @@ const App = () => {
                      */}
                         <Routes>
                             <Route exact path="/" element={<EmptyPage />} />
-                            <Route exact path="/applications" element={<ApplicationPage />} />
-                            <Route exact path="/applications/new" element={<ApplicationForm />}  />
-                            <Route exact path="/applications/:applicationId/edit" element={<ApplicationForm />} />
-                            <Route exact path="/applications/:applicationId" element={<ApplicationDetail />} />
-
                             <Route exact path="/roles" element={<RolePage />} />
                             <Route exact path="/roles/new" element={<RoleForm />}  />
                             <Route exact path="/roles/:roleId/edit" element={<RoleForm />} />
@@ -444,8 +381,10 @@ const App = () => {
         );
     }
 
-    if(isExpired) return <div className="layout-main"><LogoutRoute mostrarError={mostrarError} error={error} /></div>
-    
+
+    if(isTokenExpired) return <div className="layout-main"><LogoutRoute mostrarError={mostrarError} error={error} /></div>
+  
+
     return (
         <div>
            <LoginRoute mostrarError={mostrarError} usuario={usuario}  />) 

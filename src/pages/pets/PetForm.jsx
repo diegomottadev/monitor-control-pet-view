@@ -3,12 +3,12 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { Toast } from "primereact/toast";
-import AppBreadcrumb from "../../../components/own/AppBreadcrumb";
+import AppBreadcrumb from "../../components/own/AppBreadcrumb";
 import { useCallback } from "react";
 import { Checkbox } from "primereact/checkbox";
 import { Dropdown } from "primereact/dropdown";
 import { Calendar } from "primereact/calendar";
-import { petServiceInstance } from "../../../services/pets/PetService";
+import { petServiceInstance } from "../../services/pets/PetService";
 
 export const PetForm = () => {
   // Refs

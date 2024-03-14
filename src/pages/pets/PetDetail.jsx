@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { Button } from "primereact/button";
-import { petServiceInstance } from "../../../services/pets/PetService";
+import { petServiceInstance } from "../../services/pets/PetService";
 import { Tag } from "primereact/tag";
 
 const PetDetail = ({ params }) => {

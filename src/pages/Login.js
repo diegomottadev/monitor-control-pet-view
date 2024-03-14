@@ -51,7 +51,11 @@ export const Login = ({ mostrarError, error, setToken }) => {
       mostrarError(error.response.data.message);
     }
   };
-
+  // if (error) {
+  //   // Extract error message from the error object
+  //   const errorMessage = error.message || 'An error occurred';
+  //   return <div>Error: {errorMessage}</div>;
+  // } 
   // Render
   return (
     <div className="login-body">

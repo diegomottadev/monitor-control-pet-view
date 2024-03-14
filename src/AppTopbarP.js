@@ -24,10 +24,10 @@ const AppTopbarP = (props) => {
             <ul className={topbarMenuClassName}>
                    <Tooltip target=".custom-target-icon" />
                     <li className={activeTopbarItemClassName('settings')}>
-                        <button  className="custom-target-icon p-link" data-pr-tooltip="Salir"
+                        <button  className="custom-target-icon p-link" data-pr-tooltip="Sign out"
                              data-pr-position="left" onClick={(e) => props.onTopbarItemClick(e, 'settings')}>
                             <i  className="topbar-icon pi pi-sign-out"></i>
-                            <span className="topbar-item-name">Salir</span>
+                            <span className="topbar-item-name">Sign out</span>
                         </button>
                         
                     </li>
