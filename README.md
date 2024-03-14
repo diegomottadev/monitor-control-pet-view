@@ -1,8 +1,8 @@
 # Goal of the project
 
-The project is a web application built using technologies such as Node.js, Express, and TypeScript for the backend, and React.js for the frontend. The backend, developed with Node.js and Express, serves as the server handling client requests, performing operations in the database, and providing data to the frontend.
+The project is a web application designed to manage the needs of our pets, including veterinary care, parasite control, vaccinations, and food tracking. It utilizes a tech stack comprising Node.js, Express, and TypeScript for the backend, while React.js powers the frontend.
 
-On the other hand, the frontend is developed in React.js, a popular JavaScript library for building interactive user interfaces. For the user interface, a component suite called ReactPrime is being used, which provides a collection of ready-to-use UI components specifically designed for React.js.
+In the backend, built with Node.js and Express, a server is established to handle client requests, execute operations in the database, and furnish data to the frontend.
 
 # Installation Guide
 
@@ -10,7 +10,7 @@ To run the frontend on your computer, you'll need to install Node.js and a Node.
 
   1 - Clone the project:
 
-    git clone https://github.com/diegomottadev/track-job-view.git
+    git clone https://github.com/diegomottadev/monitor-control-pet-view.git
   
   2 - Install dependencies:
     
